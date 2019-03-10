@@ -1,9 +1,10 @@
 package net.anthonykozar.involutionary.curves;
 
+import net.anthonykozar.involutionary.util.DPoint;
 import net.anthonykozar.involutionary.util.MathUtils;
 import net.anthonykozar.involutionary.util.RandomUtils;
 
-public class Polytrochoid
+public class Polytrochoid implements PlaneCurve
 {
 	final public int	MAXCIRCLES = 10;
 
@@ -136,6 +137,13 @@ public class Polytrochoid
 		setDrawingParms(circles, radii, penpos);
 	}
 
+	@Override
+	public DPoint calculatePoint(double curveparameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public void calculatePoints(/* double start, double end, buffer? */)
 	{
 		final double arcstart = 0.0;							// angle of beginning of arc
