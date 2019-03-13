@@ -4,9 +4,9 @@ import java.awt.*;
 
 import net.anthonykozar.involutionary.curves.PlaneCurve;
 import net.anthonykozar.involutionary.desktop.view.AbstractSwingView;
+import net.anthonykozar.involutionary.graphics.DPoint;
 import net.anthonykozar.involutionary.render.Renderer;
 import net.anthonykozar.involutionary.render.RenderingTarget;
-import net.anthonykozar.involutionary.util.DPoint;
 
 public class AWTPointRenderer implements Renderer
 {

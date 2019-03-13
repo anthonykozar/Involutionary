@@ -6,7 +6,7 @@
 	therefore top should be greater than bottom.
 */
 
-package net.anthonykozar.involutionary.util;
+package net.anthonykozar.involutionary.graphics;
 
 public class DRect {
 

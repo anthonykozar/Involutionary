@@ -1,6 +1,6 @@
 package net.anthonykozar.involutionary.curves;
 
-import net.anthonykozar.involutionary.util.DPoint;
+import net.anthonykozar.involutionary.graphics.DPoint;
 
 public class Circle implements PlaneCurve
 {

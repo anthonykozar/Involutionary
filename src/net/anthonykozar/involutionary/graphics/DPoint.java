@@ -4,7 +4,7 @@
 	plane using rectangular coordinates.
  */
 
-package net.anthonykozar.involutionary.util;
+package net.anthonykozar.involutionary.graphics;
 
 public class DPoint
 {
