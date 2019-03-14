@@ -13,8 +13,6 @@ public class Polytrochoid implements PlaneCurve
 	final private int[]	 initradii = {1, 27, 9};
 	final private double initpenpos = 1.0;
 
-	protected double	centerx;
-	protected double	centery;
 	protected double	drawingradius;				// maximum distance from the center that we can draw
 	protected int		numcircles;					// number of circles in use (must be <= MAXCIRCLES)
 	protected int[]		iradii;						// integer radii of each circle
@@ -26,6 +24,7 @@ public class Polytrochoid implements PlaneCurve
 	protected double	penratio;					// the ratio penlength/innerradius
 	protected double	penlength;					// distance from the center of inner circle to the "pen"
 	protected double	revolutions;				// num of revolutions main angle needs to complete the figure
+	protected double	totalanglerotation;			// total angle rotation in radians needed to complete the figure
 	protected int		pointdensity;				// how many points to draw per revolution
 
 	public Polytrochoid()
@@ -40,15 +39,8 @@ public class Polytrochoid implements PlaneCurve
 		
 		// initialize all parameters
 		for (int i = 0; i < MAXCIRCLES; i++)  iradii[i] = 1;
-		setOrigin(0.0, 0.0);
 		setScale(1.0);
 		setDrawingParms(initcircles, initradii, initpenpos);
-	}
-
-	public void setOrigin(double x, double y)
-	{
-		centerx = x;
-		centery = y;		
 	}
 
 	public void setScale(double scale)
@@ -103,6 +95,7 @@ public class Polytrochoid implements PlaneCurve
 		}
 		
 		revolutions = (double)CalculateRevolutions(numcircles, iradii);
+		totalanglerotation = revolutions * 2.0 * Math.PI;
 		setPenLength(penposition);
 	}
 	
@@ -139,8 +132,23 @@ public class Polytrochoid implements PlaneCurve
 
 	@Override
 	public DPoint calculatePoint(double curveparameter) {
-		// TODO Auto-generated method stub
-		return null;
+		double	x, y, angle, innerangle, lastangle;
+		
+		angle = curveparameter * totalanglerotation;
+		// calculate coordinates of first inner circle center relative to the origin
+		x = radiidiffs[0] * Math.cos(angle);
+		y = radiidiffs[0] * Math.sin(angle);
+		lastangle = angle;
+		for (int i = 1; i < numcircles; i++) {
+			// calculate the angle to the next circle center (or the pen) relative to a horizontal line
+			innerangle = lastangle - (lastangle * angleratios[i]);
+			// calculate coordinates of next circle center (or the pen) by finding the offsets from last center
+			x += radiidiffs[i] * Math.cos(innerangle);
+			y += radiidiffs[i] * Math.sin(innerangle);
+			lastangle = innerangle;
+		}
+		
+		return new DPoint(x, y);
 	}
 
 	@Override
@@ -162,12 +170,9 @@ public class Polytrochoid implements PlaneCurve
 				innerangle = lastangle - (lastangle * angleratios[i]);
 				// calculate coordinates of next circle center (or the pen) by finding the offsets from last center
 				x += radiidiffs[i] * Math.cos(innerangle);
-				y += radiidiffs[i] * Math.sin(innerangle);				
+				y += radiidiffs[i] * Math.sin(innerangle);
 				lastangle = innerangle;
 			}
-			// calculate coordinates relative to our "drawing origin"
-			x = centerx + x;
-			y = centery - y;
 		}
 		
 		// return (x,y);
