@@ -36,7 +36,7 @@ public class AWTPointRenderer implements Renderer
 	{
 		setOrigin();
 		setScale();
-		pointdensity = 5000;		
+		pointdensity = 100000;
 	}
 	
 	public void setOrigin()

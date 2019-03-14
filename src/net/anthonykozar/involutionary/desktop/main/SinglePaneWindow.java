@@ -43,7 +43,8 @@ public class SinglePaneWindow extends JFrame
 	/**	A little demo showing how to combine several components to display a curve. */
 	public static void main(String[] args) {
 		final BasicCurveView pane = new BasicCurveView();
-		PlaneCurve curve = new Circle();
+		Polytrochoid curve = new Polytrochoid();
+		curve.randomizeParms();
 		final AWTPointRenderer renderer = new AWTPointRenderer(pane, curve);
 		SinglePaneWindow app = new SinglePaneWindow(pane);
 		app.configureFullSizeWindow();
@@ -57,6 +58,9 @@ public class SinglePaneWindow extends JFrame
 		    	pane.repaint();
 		    }
 		});
+		
+		// make sure the initial image is shown
+		pane.repaint();
 	}
 
 	/**	Set the size and location of the window to fill the available screen space
