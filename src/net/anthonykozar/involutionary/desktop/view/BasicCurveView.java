@@ -1,11 +1,8 @@
 package net.anthonykozar.involutionary.desktop.view;
 
 import java.awt.*;
-import javax.swing.JComponent;
-
-import net.anthonykozar.involutionary.desktop.render.AWTPointRenderer;
+import net.anthonykozar.involutionary.desktop.render.AWTDrawingContext;
 import net.anthonykozar.involutionary.render.Renderer;
-import net.anthonykozar.involutionary.render.RenderingTarget;
 
 public class BasicCurveView extends AbstractSwingView
 {
@@ -31,11 +28,8 @@ public class BasicCurveView extends AbstractSwingView
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
 		if (renderer != null) {
-			// set the Graphics context for the renderer and render
-			if (renderer instanceof AWTPointRenderer) {
-				((AWTPointRenderer)renderer).setGraphics(g);
-			}
-			renderer.render();
+			// wrap Graphics context for the renderer and render
+			renderer.render(new AWTDrawingContext(g));
 		}
 	}
 

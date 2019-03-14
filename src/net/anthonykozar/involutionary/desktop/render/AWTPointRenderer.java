@@ -1,10 +1,8 @@
 package net.anthonykozar.involutionary.desktop.render;
 
-import java.awt.*;
-
 import net.anthonykozar.involutionary.curves.PlaneCurve;
 import net.anthonykozar.involutionary.desktop.view.AbstractSwingView;
-import net.anthonykozar.involutionary.graphics.DPoint;
+import net.anthonykozar.involutionary.graphics.*;
 import net.anthonykozar.involutionary.render.Renderer;
 import net.anthonykozar.involutionary.render.RenderingTarget;
 
@@ -17,7 +15,6 @@ public class AWTPointRenderer implements Renderer
 	
 	protected PlaneCurve		curve;
 	protected AbstractSwingView	rendertarget;
-	protected Graphics			gfxcontext;
 	
 	public AWTPointRenderer(AbstractSwingView target)
 	{
@@ -55,21 +52,6 @@ public class AWTPointRenderer implements Renderer
 		drawingradius = (Math.min(rendertarget.getWidth(), rendertarget.getHeight()) * 0.25) - 30.0;		
 	}
 	
-	/** setGraphics() must be called before *EACH CALL* to render() to provide a 
-		Graphics context for rendering.
-	 */
-	public void setGraphics(Graphics g)
-	{
-		gfxcontext = g;
-	}
-	
-	protected void drawPoint(Graphics g, double x, double y)
-	{
-		// we have to use drawLine() to draw a single point
-		g.drawLine((int)Math.round(x), (int)Math.round(y), 
-				   (int)Math.round(x), (int)Math.round(y));
-	}
-	
 	/* Methods implementing the Renderer interface */
 	
 	@Override
@@ -79,7 +61,7 @@ public class AWTPointRenderer implements Renderer
 	}
 	
 	@Override
-	public void render() {
+	public void render(DrawingContext gfxcontext) {
 		final double start = 0.0;						// render from the curve's beginning
 		final double end = 1.0;							// to its end
 		final double parmincr = 1.0/pointdensity;		// increment at which to draw points
@@ -100,12 +82,9 @@ public class AWTPointRenderer implements Renderer
 				// translate coordinates relative to our drawing origin & scale
 				x = centerx + drawingradius*point.x;
 				y = centery - drawingradius*point.y;		// invert Y coords for screen drawing!
-				drawPoint(gfxcontext, x, y);
+				gfxcontext.drawPoint(x, y);
 			}
 		}
-		
-		// release the reference to the Graphics object
-		gfxcontext = null;
 	}
 	
 }
