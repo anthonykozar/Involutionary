@@ -45,7 +45,7 @@ public class SinglePaneWindow extends JFrame
 		final BasicCurveView pane = new BasicCurveView();
 		Polytrochoid curve = new Polytrochoid();
 		curve.randomizeParms();
-		final AWTPointRenderer renderer = new AWTPointRenderer(pane, curve);
+		final AWTLineRenderer renderer = new AWTLineRenderer(pane, curve);
 		SinglePaneWindow app = new SinglePaneWindow(pane);
 		app.configureFullSizeWindow();
 		renderer.autoConfigure();
