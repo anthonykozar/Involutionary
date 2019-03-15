@@ -4,8 +4,8 @@ import net.anthonykozar.involutionary.graphics.DPoint;
 
 public interface PlaneCurve {
 
-	DPoint calculatePoint(double curveparameter);
+	public DPoint calculatePoint(double curveparameter);
 
-	void calculatePoints(/* double start, double end, buffer? */);
+	public void calculatePoints(/* double start, double end, buffer? */);
 
 }
